@@ -11,6 +11,21 @@ class Board
     @grid = grid
   end
 
+  def to_s
+    ret = ""
+
+    @grid.each do |row|
+      row_str = " "
+      row.each do |piece|
+        row_str << piece.to_s << " "
+      end
+      row_str << "\n"
+      ret << row_str
+    end
+
+    ret
+  end
+
   protected
 
   def make_starting_grid

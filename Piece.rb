@@ -5,9 +5,6 @@ class Piece
     @pos = pos
   end
 
-  def to_s
-  end
-
   def empty?
   end
 

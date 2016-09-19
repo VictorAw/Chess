@@ -1,6 +1,10 @@
 require_relative "Piece.rb"
 
 class Pawn < Piece
+  def to_s
+    @color == :black ? "\u2659" : "\u265F"
+  end
+
   def symbol
   end
 
