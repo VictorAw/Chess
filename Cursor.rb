@@ -76,8 +76,29 @@ class Cursor
   end
 
   def handle_key(key)
+    case key
+      when :up
+        update_pos(MOVES[:up])
+      when :right
+        update_pos(MOVES[:right])
+      when :down
+        update_pos(MOVES[:down])
+      when :left
+        update_pos(MOVES[:left])
+      when :space
+        @cursor_pos
+      when :return
+        @cursor_pos
+      when :ctrl_c
+        Process.exit(0)
+      else
+    end
   end
 
   def update_pos(diff)
+    # TODO: Add board bounds checks
+    @cursor_pos[0] += diff[0]
+    @cursor_pos[1] += diff[1]
+    nil
   end
 end
