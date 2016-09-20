@@ -12,5 +12,6 @@ class Rook < Piece
   end
 
   def move_dirs
+    [:up, :down, :left, :right]
   end
 end

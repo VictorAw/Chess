@@ -12,5 +12,11 @@ class Knight < Piece
   end
 
   def move_diffs
+    diffs = [[-2, -1], [-2, 1], # Up
+             [-1, 2],  [1, 2],  # Right
+             [2, -1],  [2, 1],  # Down
+             [-1, -2], [1, -2]  # Left
+    ]
+    super diffs # Passes diffs into Stepable
   end
 end

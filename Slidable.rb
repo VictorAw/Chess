@@ -1,5 +1,8 @@
 module Slidable
   def moves
+    ret = []
+
+    ret
   end
 
   private
@@ -7,6 +10,7 @@ module Slidable
   end
 
   def horizontal_dirs
+    
   end
 
   def diagonal_dirs

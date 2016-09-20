@@ -156,7 +156,7 @@ class Board
   def move_piece!(color, from, to)
     raise "There is no piece in that square" if from.empty?
     raise "There is already a piece in that square" unless to.empty?
-    raise "Moving other player's piece" if color != self[from].color
+    raise "Moving onto your own piece" if color == self[from].color
 
     self[from], self[to] = self[to], self[from]
   end
