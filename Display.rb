@@ -12,11 +12,31 @@ class Display
   def move(new_pos)
   end
 
+  # TODO: Fix bug where "\n" gets overwritten b
+  # cursor. Move cursor to next char?
   def render
-    puts @board.to_s
+    clear_terminal
+    grid = @board.to_s # Grid is a string
+    cursor_pos = @cursor.cursor_pos
+    row, col = cursor_pos
+    grid[row*18+(col*2)+1] = "\u25A3"
+
+    puts grid
+  end
+
+  # TODO: Find a better solution for clearing terminal
+  def clear_terminal
+    system "clear" or system "cls"
+  end
+
+  def get_move
+    @cursor.get_input
   end
 end
 
 b = Board.new
 d = Display.new(b)
-d.render
+while true
+  d.render
+  d.get_move
+end

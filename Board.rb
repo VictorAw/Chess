@@ -10,7 +10,41 @@ class Board
   def initialize(grid = make_starting_grid)
     @grid = grid
   end
+=begin
+  def top_str
+    ret = " \u2554"
+    8.times { ret << "\u2550\u2566" }
+    ret << "\u2550\u2557"
+  end
 
+  def divider_str
+		ret = " \u2560"
+		9.times { ret << "\u2550\u256C" }
+		ret << "\u2550\u2563"
+
+		ret
+	end
+
+  def row_str(row, col_end, hidden)
+    ret = "#{row}"
+    for i in 0..col_end
+      # If the game is over or the square is not occupied by a ship,
+      # draw that shape, otherwise hide the ship
+      ret << "\u2551#{char_at(row, i, hidden)}"
+    end
+    ret << "\u2551"
+
+    ret
+  end
+
+  def bottom_str
+    ret = " \u255A"
+    9.times { ret << "\u2550\u2569" }
+    ret << "\u2550\u255D"
+
+    ret
+  end
+=end
   def to_s
     ret = ""
 
