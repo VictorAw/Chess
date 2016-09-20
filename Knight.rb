@@ -5,10 +5,11 @@ class Knight < Piece
   include Stepable
 
   def to_s
-    @color == :black ? "\u2658" : "\u265E"
+    @color == :white ? "\u2658" : "\u265E"
   end
 
   def symbol
+    :kn
   end
 
   def move_diffs
@@ -20,3 +21,5 @@ class Knight < Piece
     super diffs # Passes diffs into Stepable
   end
 end
+
+p Knight.ancestors

@@ -4,6 +4,7 @@ class NullPiece
   include Singleton
 
   def moves
+    []
   end
 
   def color
@@ -14,5 +15,6 @@ class NullPiece
   end
 
   def empty?
+    true
   end
 end

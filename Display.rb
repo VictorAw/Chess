@@ -19,7 +19,7 @@ class Display
     grid = @board.to_s # Grid is a string
     cursor_pos = @cursor.cursor_pos
     row, col = cursor_pos
-    grid[row*18+(col*2)+1] = "\u25A3"
+    grid[row*18+(col*2)+1] = "\e[38;2;255;255;255m\u25A3\e[0m"
 
     puts grid
   end
