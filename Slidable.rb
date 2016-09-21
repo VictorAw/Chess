@@ -48,10 +48,12 @@ module Slidable
     @board[pos].color != @color
   end
 
-  def empty?(pos)
+  public
+  def empty_pos?(pos)
     @board[pos].empty?
   end
 
+  private
   def grow_unblocked_moves_in_dir(dy, dx)
     # debugger
     pos = @pos.dup
@@ -60,10 +62,10 @@ module Slidable
     pos = [dy + y, dx + x]
 
     while @board.on_board(pos) &&
-          (opponent_piece?(pos) || empty?(pos))
+          (opponent_piece?(pos) || empty_pos?(pos))
       y,x = pos
       unblocked_moves << pos
-      break if opponent_piece?(pos) && !empty?(pos)
+      break if opponent_piece?(pos) && !empty_pos?(pos)
       pos = [dy + y, dx + x]
     end
     unblocked_moves

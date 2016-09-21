@@ -61,7 +61,7 @@ class Board
       row.each_with_index do |piece, j|
         color = color == :white ? :black : :white
 
-        char = color_str(color, piece.to_s)
+        char = piece.to_s#color_str(color, piece.to_s)
         row_str << char << " "
       end
       row_str << "\n"
@@ -147,42 +147,32 @@ class Board
     pos[0] >= 0 && pos[1] >= 0 && pos[0] < 8 && pos[1] < 8
   end
 
+=begin
   def dup
-    # Not sure what this is for, if we need a completely new
-    # copy with new pieces, will need to construct new pieces
-    # somewhere
-    # grid = []
-    # @grid.each do |el|
-    #   row = []
-    #   el.each do |piece|
-    #     row << piece.dup unless piece.is_a?(NullPiece)
-    #     row << piece if piece.is_a?(NullPiece)
-    #   end
-    #   grid << row
-    # end
-    # Board.new(grid)
+
   end
 
   def move_piece(color, from, to)
-    # Not sure how this will work until we know what dup is for
-    # self.dup.move_piece!(color, from, to)
   end
+=end
 
   # Returns any taken pieces
   def move_piece!(color, from, to)
     raise "There is no piece in that square" if from.empty?
-    raise "Moving onto your own piece" if color == self[from].color
+    raise "Moving onto your own piece" if color == self[to].color
 
-    taken_piece = self[to]
+    taken_piece = self[to].dup unless self[to].symbol == :n
     self[to] = NullPiece.instance # "Take" opponent's pieces
+    self[from].pos = to
     self[from], self[to] = self[to], self[from]
 
     taken_piece
   end
 
   def undo_move!(taken_piece, from, to)
+    self[to].pos = from
     self[from], self[to] = self[to], self[from]
-    self[to] = taken_piece
+    self[to] = taken_piece unless taken_piece.symbol == :n
   end
 
   def in_check?(color)
@@ -208,8 +198,10 @@ class Board
     valid_moves
   end
 
+require "byebug"
   def checkmate?(color)
-    if in_check?(color)
+       debugger
+    if in_check?(color) # looping a lot
       valid_moves = all_valid_moves_for_player(color)
       return true if valid_moves.empty?
     end
@@ -224,19 +216,28 @@ class Board
     @grid.each_with_index do |row, y|
       row.each_with_index do |piece, x|
         return [y, x] if piece.symbol == :k && piece.color == color
+        # For some reason if piece.is_a?(King) causes stack levle too deep error
       end
     end
 
     nil
   end
-
 end
 
-grid = Array.new(8) { Array.new(8) { NullPiece.instance } }
-b = Board.new(grid)
-grid[0][0] = King.new(:black, b, [0, 0])
-# grid[1][0] = Rook.new(:black, b, [1, 0]) # Crashes
-# grid[1][1] = Pawn.new(:white, b, [1, 1]) # False negative
-# grid[1][0] = Pawn.new(:black, b, [1, 0]) # Should be false
-grid[2][1] = Knight.new(:white, b, [2, 1])
-p b.in_check?(:black)
+if __FILE__ == $PROGRAM_NAME
+  grid = Array.new(8) { Array.new(8) { NullPiece.instance }}
+  b = Board.new(grid)
+  # grid[0][0] = King.new(:black, b, [0, 0])
+  # # grid[1][1] = Pawn.new(:white, b, [1, 1])
+  # # grid[1][0] = Pawn.new(:white, b, [1, 0])
+  # grid[2][1] = Rook.new(:white, b, [2, 1])
+  # grid[2][0] = Rook.new(:white, b, [2, 0])
+  # grid[7][7] = King.new(:white, b, [7, 7])
+  # p b.checkmate?(:black)
+  grid[0][0] = Rook.new(:black, b, [0, 0])
+  puts "0, 0 is a #{b[[0, 0]].class}"
+  puts "1, 0 is a #{b[[1, 0]].class}"
+  b.move_piece!(:black, [0, 0], [1, 0])
+  puts "0, 0 is a #{b[[0, 0]].class}"
+  puts "1, 0 is a #{b[[1, 0]].class}"
+end

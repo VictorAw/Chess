@@ -86,9 +86,9 @@ class Cursor
       when :left
         update_pos(MOVES[:left])
       when :space
-        @cursor_pos
+        @cursor_pos.dup
       when :return
-        @cursor_pos
+        @cursor_pos.dup
       when :ctrl_c
         Process.exit(0)
       else
@@ -99,6 +99,9 @@ class Cursor
     # TODO: Add board bounds checks
     @cursor_pos[0] += diff[0]
     @cursor_pos[1] += diff[1]
+
+    @cursor_pos[0] = @cursor_pos[0] % 7
+    @cursor_pos[1] = @cursor_pos[1] % 7
     nil
   end
 end

@@ -48,13 +48,13 @@ class Pawn < Piece
     # F_R for black (1, 1)
     side_moves = []
 
-    starting_pos = @pos.dup
-    starting_pos[0] += forward_dir
-    starting_pos[1] -= 1
-    side_moves << starting_pos unless @board[starting_pos].empty?
-    starting_pos = starting_pos.dup
-    starting_pos[1] += 2
-    side_moves << starting_pos unless @board[starting_pos].empty?
+    pos = @pos.dup
+    pos[0] += forward_dir
+    pos[1] -= 1
+    side_moves << pos unless @board.on_board(pos) && @board[pos].empty?
+    pos = pos.dup
+    pos[1] += 2
+    side_moves << pos unless @board.on_board(pos) && @board[pos].empty?
 
     side_moves
   end

@@ -7,7 +7,12 @@ class NullPiece
     []
   end
 
+  def symbol
+    :n
+  end
+
   def color
+    :null
   end
 
   def to_s
